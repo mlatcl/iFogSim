@@ -78,6 +78,7 @@ public class CardiovascularHealthMonitoringApplicationEdgeward {
             }
 
             createMobileUser(broker.getId(), appId, datasetReference);
+            // creates the simulation topology using the content of the dataset folder
             createFogDevices(broker.getId(), appId);
 
 
@@ -91,10 +92,12 @@ public class CardiovascularHealthMonitoringApplicationEdgeward {
                     actuators, locator);
 
 
+            // Submit application assigns services on devices
             controller.submitApplication(application, 0, (new ModulePlacementMobileEdgewards(fogDevices, sensors, actuators, application, moduleMapping)));
 
             TimeKeeper.getInstance().setSimulationStartTime(Calendar.getInstance().getTimeInMillis());
-
+            
+            // Simulates the application running
             CloudSim.startSimulation();
 
             CloudSim.stopSimulation();
